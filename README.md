@@ -49,11 +49,18 @@
 
 ## TODO: 
 - (Done) Try setup with django and postgres
-- Try setup with nginx, wsgi, uwsgi
-- Try setup with nginx, wsgi, uwsgi and postgres
+- (Done) Try setup with nginx, wsgi, uwsgi
+- (Done) Try to package a application image
+- Try setup with nginx, django, uwsgi and postgres
 - Port project to docker
-- Try to package a application image
 - Try a wp setup
+
+## Questions:
+- Best practice when distributing files?
+- How do I mount files to a image correctly?
+- How do I perform Django migrations in a docker image?
+- Best practice when dealing with log-files?
+- Best approach when debugging?
 
 ## Experiment: 
 
@@ -66,3 +73,5 @@
 - https://docs.docker.com/mac/step_one/
 - https://docs.docker.com/v1.8/installation/mac/
 - http://crosbymichael.com/dockerfile-best-practices.html
+- http://docs.docker.com/engine/userguide/networking/default_network/dockerlinks/#connect-with-the-linking-system
+- http://michal.karzynski.pl/blog/2015/04/19/packaging-django-applications-as-docker-container-images/
