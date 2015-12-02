@@ -51,7 +51,7 @@
 - (Done) Try setup with django and postgres
 - (Done) Try setup with nginx, wsgi, uwsgi
 - (Done) Try to package a application image
-- Try setup with nginx, django, uwsgi and postgres
+- (Done) Try setup with nginx, django, uwsgi and postgres
 - Port project to docker
 - Try a wp setup
 
