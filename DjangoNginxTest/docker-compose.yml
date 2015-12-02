@@ -1,0 +1,13 @@
+#nginx:
+    #image: nginx
+    #restart: always
+    #ports:
+        #- "80:80"
+
+wsgi_app:
+    build: ./wsgi_app
+    ports:
+        - "8080:8080"
+
+#db:
+    #image: postgres
