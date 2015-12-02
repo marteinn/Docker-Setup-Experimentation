@@ -1,0 +1,12 @@
+nginx:
+    build: ./nginx
+    links:
+        - wsgi_app:wsgi_app
+    restart: always
+    ports:
+        - "80:80"
+
+wsgi_app:
+    build: ./wsgi_app
+    ports:
+        - "8080"
