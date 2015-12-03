@@ -6,7 +6,6 @@ RUN apt-get install -y libpq-dev python python-dev python-setuptools
 RUN apt-get install -y binutils libproj-dev gdal-bin
 RUN easy_install pip
 
-RUN mkdir /app
 WORKDIR /app
 
 ADD requirements /requirements
