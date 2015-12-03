@@ -1,0 +1,18 @@
+db:
+  image: mdillon/postgis
+
+web:
+    build: .
+    volumes:
+        - "./src:/app"
+    links:
+        - db
+    ports:
+        - "8000:8000"
+    environment:
+        DJANGO_SETTINGS_MODULE: composeexample.settings
+        DB_USERNAME: postgres
+        DB_PASSWORD:
+        DB_NAME: postgres
+        DB_HOST: db
+        DB_PORT: 5432

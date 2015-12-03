@@ -52,7 +52,7 @@
 - (Done) Try setup with nginx, wsgi, uwsgi
 - (Done) Try to package a application image
 - (Done) Try setup with nginx, django, uwsgi and postgres
-- Test to run a multisite setup
+- Test to run a multisite setup with reverse proxy
 - Port project to docker
 - Try a wp setup
 
