@@ -52,6 +52,7 @@
 - (Done) Try setup with nginx, wsgi, uwsgi
 - (Done) Try to package a application image
 - (Done) Try setup with nginx, django, uwsgi and postgres
+- Test to run a multisite setup
 - Port project to docker
 - Try a wp setup
 
@@ -75,3 +76,6 @@
 - http://crosbymichael.com/dockerfile-best-practices.html
 - http://docs.docker.com/engine/userguide/networking/default_network/dockerlinks/#connect-with-the-linking-system
 - http://michal.karzynski.pl/blog/2015/04/19/packaging-django-applications-as-docker-container-images/
+- https://github.com/jwilder/nginx-proxy
+- http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/
+- http://eyenx.ch/2015/04/18/loadbalancing-containers-with-docker-compose/
