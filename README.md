@@ -28,6 +28,10 @@
 	- `docker-compose build`
 - Remove containers
 	- `docker rm $(docker-compose ps -q)`
+- Get container id by compose name 
+	- `$(docker-compose ps -q <name>)`
+- Run exec by compose name
+	- `docker exec $(docker-compose ps -q <name>) ls -la`
 
 ### Docker
 - Show running containers
@@ -60,6 +64,7 @@
 - (Done) Try to package a application image
 - (Done) Try setup with nginx, django, uwsgi and postgres
 - (Done) Port a django project to docker
+- Create a CI runner with Circle-CI and docker
 - Test to run a multisite setup with reverse proxy
 - Port a wp project to docker
 - Research docker repository
@@ -91,3 +96,4 @@
 - http://jasonwilder.com/blog/2014/03/25/automated-nginx-reverse-proxy-for-docker/
 - http://eyenx.ch/2015/04/18/loadbalancing-containers-with-docker-compose/
 - https://realpython.com/blog/python/django-development-with-docker-compose-and-machine/
+- http://mherman.org/blog/2015/03/06/node-with-docker-continuous-integration-and-delivery/#.VmCxyOPqiko
