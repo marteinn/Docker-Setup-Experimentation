@@ -1,0 +1,18 @@
+machine:
+    timezone:
+        Europe/Stockholm
+    services:
+        - docker
+
+dependencies:
+    cache_directories:
+        - "~/docker"
+    pre:
+        - pip install docker-compose
+
+test:
+    pre:
+        - docker-compose up -d
+    override:
+        # - docker exec $(docker-compose ps -q web) python manage.py test
+        - sudo lxc-attach -n "$(docker inspect --format '{{.Id}}' $(docker-compose ps -q web))" -- bash -c "python manage.py test"
