@@ -77,7 +77,8 @@
 - Best practice when dealing with log-files?
 - Best approach when debugging?
 - How can I connect to a container directly?
-	- `docker exec -it <container_id> bash`	
+	- `docker exec -it <container_id> bash`
+- Best practise when dealing with .env files?
 
 ## Experiment: 
 

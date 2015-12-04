@@ -5,8 +5,6 @@ machine:
         - docker
 
 dependencies:
-    cache_directories:
-        - "~/docker"
     pre:
         - pip install docker-compose
 
