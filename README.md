@@ -8,55 +8,57 @@
 
 ## Commands:
 ### Docker-machine
+- Create default virtualbox machine
+    - `docker-machine create --driver virtualbox default`
 - `docker-machine ssh default`
 - `docker-machine ls`
 - Show machine ip
-	- `docker-machine ip <name>`
+    - `docker-machine ip <name>`
 - `eval "$(docker-machine env default)"`
 
 ### Docker compose
 - Start containers
-	- `docker-compose up`
+    - `docker-compose up`
 - Run command on container
-	- `docker-compose run web django-admin.py startproject composeexample .`
-	- `docker-compose run web python manage.py migrate`
+    - `docker-compose run web django-admin.py startproject composeexample .`
+    - `docker-compose run web python manage.py migrate`
 - Show containers
-	- `docker-compose ps`
+    - `docker-compose ps`
 - Stop all containers
-	- `docker stop $(docker-compose ps -q)`
+    - `docker stop $(docker-compose ps -q)`
 - Rebuild images
-	- `docker-compose build`
+    - `docker-compose build`
 - Remove containers
-	- `docker rm $(docker-compose ps -q)`
-- Get container id by compose name 
-	- `$(docker-compose ps -q <name>)`
+    - `docker rm $(docker-compose ps -q)`
+- Get container id by compose name
+    - `$(docker-compose ps -q <name>)`
 - Run exec by compose name
-	- `docker exec $(docker-compose ps -q <name>) ls -la`
+    - `docker exec $(docker-compose ps -q <name>) ls -la`
 
 ### Docker
 - Show running containers
-	- `docker ps`
+    - `docker ps`
 - Stop all containers
-	- `docker stop $(docker ps -a -q)`
+    - `docker stop $(docker ps -a -q)`
 - Show all images
-	- `docker images`
+    - `docker images`
 - Remove all images
-	- `docker rmi $(docker images -q)`
+    - `docker rmi $(docker images -q)`
 - Remove all containers
-	- `docker rm $(docker ps -a -q)`
+    - `docker rm $(docker ps -a -q)`
 - Remove all dangling images
-	- `docker images -q --filter "dangling=true" | xargs docker rmi`
+    - `docker images -q --filter "dangling=true" | xargs docker rmi`
 - Remove all stopped containers: 
-	- `docker rm $(docker ps -a -q)`
+    - `docker rm $(docker ps -a -q)`
 - Remove image
-	- `docker rmi <image id>`
+    - `docker rmi <image id>`
 - Build image
-	- `docker build <imagename>`
+    - `docker build <imagename>`
 - Run container in shell
-	- `docker exec -it <container_id> bash`
+    - `docker exec -it <container_id> bash`
 - Run command on container
-	- Example: `docker exec <container_id> django-admin.py startproject composeexample .`
-	- Example: `docker exec <container_id> web python manage.py migrate`
+    - Example: `docker exec <container_id> django-admin.py startproject composeexample .`
+    - Example: `docker exec <container_id> web python manage.py migrate`
 
 ## TODO: 
 - (Done) Try setup with django and postgres
@@ -73,14 +75,14 @@
 - Best practice when distributing files?
 - How do I mount files to a image correctly?
 - How do I perform Django migrations in a docker image?
-	- Wrap migrate and web serve in a bash script called `docker-entrypoint.sh`
+    - Wrap migrate and web serve in a bash script called `docker-entrypoint.sh`
 - Best practice when dealing with log-files?
 - Best approach when debugging?
 - How can I connect to a container directly?
-	- `docker exec -it <container_id> bash`
+    - `docker exec -it <container_id> bash`
 - Best practise when dealing with .env files?
 
-## Experiment: 
+## Experiment:
 
 ## References
 - https://docs.docker.com/engine/articles/dockerfile_best-practices/
