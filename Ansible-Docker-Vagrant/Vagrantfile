@@ -13,7 +13,8 @@ Vagrant.configure(2) do |config|
   config.vm.provision "webserver", type: "ansible" do |ansible|
     ansible.extra_vars = {
       ansible_ssh_user: 'vagrant',
-      deploy_user: 'vagrant'
+      deploy_user: 'vagrant',
+      docker_group_members: ['vagrant'],
     }
     ansible.playbook = "ansible/playbook.yml"
   end

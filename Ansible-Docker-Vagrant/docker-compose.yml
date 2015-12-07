@@ -1,0 +1,21 @@
+# nginx
+
+db:
+  image: postgres
+
+nginx:
+    build: ./nginx
+    links:
+        - web:web
+    restart: always
+    ports:
+        - "80:80"
+
+web:
+    build: ./django
+    volumes:
+        - ./django/src:/src
+    ports:
+        - "8080"
+    links:
+        - db
