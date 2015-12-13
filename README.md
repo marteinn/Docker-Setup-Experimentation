@@ -54,6 +54,10 @@
     - `docker rmi <image id>`
 - Build image
     - `docker build <imagename>`
+- Build image with reporo+tag
+    - `docker build -t <user>/<imagename>:<version> <path_to_image_dir>`
+    Example:
+        - `docker build -t marteinn/ansible-example-django:v1.0.0 django`
 - Run container in shell
     - `docker exec -it <container_id> bash`
 - Run command on container
