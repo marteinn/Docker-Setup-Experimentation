@@ -2,8 +2,9 @@
   hosts: all
   sudo: yes
   roles:
+    - docker-patch
     - fretscha.first-five-minutes
     - angstwad.docker_ubuntu
 
 # - name: Deploy postgres container
-# - name: Deploy muteparrot application
+# - name: Deploy application
