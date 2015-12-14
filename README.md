@@ -48,7 +48,7 @@
     - `docker rm $(docker ps -a -q)`
 - Remove all dangling images
     - `docker images -q --filter "dangling=true" | xargs docker rmi`
-- Remove all stopped containers: 
+- Remove all stopped containers:
     - `docker rm $(docker ps -a -q)`
 - Remove image
     - `docker rmi <image id>`
@@ -63,8 +63,10 @@
 - Run command on container
     - Example: `docker exec <container_id> django-admin.py startproject composeexample .`
     - Example: `docker exec <container_id> web python manage.py migrate`
+- Keep the five most recent versions of an image (excluding latest)
+    - `docker images | grep marteinn/ansible-example-django | grep -v latest | sort -r | awk '{print "marteinn/ansible-example-django:"$2}' | tail -n +6 | xargs -n 1 docker rmi`
 
-## TODO: 
+## TODO:
 - (Done) Try setup with django and postgres
 - (Done) Try setup with nginx, wsgi, uwsgi
 - (Done) Try to package a application image
@@ -104,3 +106,5 @@
 - http://eyenx.ch/2015/04/18/loadbalancing-containers-with-docker-compose/
 - https://realpython.com/blog/python/django-development-with-docker-compose-and-machine/
 - http://mherman.org/blog/2015/03/06/node-with-docker-continuous-integration-and-delivery/#.VmCxyOPqiko
+- http://www.carlboettiger.info/2014/08/29/docker-notes.html
+- https://blog.codefresh.io/implementing-git-flow-with-dockers/
