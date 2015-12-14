@@ -9,6 +9,11 @@ Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu/trusty64"
   config.vm.network "forwarded_port", guest: 80, host: 8080
 
+  config.vm.provider "virtualbox" do |v|
+    v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
+    v.customize ["modifyvm", :id, "--memory", "256"]
+  end
+
   # Setup server
   config.vm.provision "webserver", type: "ansible" do |ansible|
     ansible.extra_vars = {
@@ -16,6 +21,7 @@ Vagrant.configure(2) do |config|
       deploy_user: 'vagrant',
       docker_group_members: ['vagrant'],
     }
+
     ansible.playbook = "ansible/playbook.yml"
   end
 end

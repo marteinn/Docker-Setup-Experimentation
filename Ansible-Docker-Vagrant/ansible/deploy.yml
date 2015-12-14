@@ -1,0 +1,47 @@
+- name: Transfer image from local to remote host
+  hosts: all
+  #sudo: yes
+  vars:
+    image: marteinn/ansible-example-django:v1.0.1
+    image_dir: /Users/martinsandstrom/Projekt/github/Docker-Setup-Experimentation/Ansible-Docker-Vagrant/django
+    image_repository: marteinn/ansible-example-django
+  tasks:
+    - name: Retrive app version from app image dockerfile
+      shell: 'cat {{ image_dir }}/Dockerfile | grep -e "^LABEL.version" | cut -d \" -f 2'
+      register: deploy_version
+      connection: local
+
+    - name: Build docker image
+      shell: 'docker build -t {{ image_repository }}:{{ deploy_version.stdout }} {{ image_dir }}'
+      connection: local
+
+    - name: Save docker image
+      shell: "docker save {{ image_repository }}:{{ deploy_version.stdout }} > /tmp/docker_image.tar"
+      connection: local
+
+    - name: Copies docker image to machine
+      copy: src=/tmp/docker_image.tar dest=/tmp/docker_image.tar
+
+    - name: Load docker image
+      shell: "docker load < /tmp/docker_image.tar"
+
+    - name: Remove previous docker image
+      shell: "docker rmi {{ image_repository }}:latest"
+      ignore_errors: yes
+
+    - name: Duplicate deploy image and tag it latest
+      shell: "docker tag {{ image_repository }}:{{ deploy_version.stdout }} {{ image_repository}}:latest"
+
+    - name: Remove older releases of image
+      shell: "docker images | grep {{ image_repository }} | grep -v latest | awk '{print \"{{ image_repository }}:\"$2}' | tail -n +4 | xargs -n 1 docker rmi"
+      ignore_errors: yes
+
+    - name: Remove local export
+      shell: "rm /tmp/docker_image.tar"
+      connection: local
+
+    - name: Remove remote export
+      shell: "rm /tmp/docker_image.tar"
+
+# - name: Deploy postgres container
+# - name: Deploy muteparrot application
