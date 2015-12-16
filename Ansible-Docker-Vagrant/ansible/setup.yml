@@ -2,12 +2,10 @@
 
 - name: Deploy and start base docker images
   hosts: all
-  vars:
-    home_dir: /home/vagrant
-    deploy_user: vagrant
-    image_repository: marteinn/ansible-example-django
+  vars_files:
+    - [ "vars/secrets.yml", "vars/all.yml" ]
   tasks:
-    - name: Pull postgres from registry and setup
+    - name: Pull postgres from registry and start container
       register: start_postgresql
       docker:
         name: db
@@ -24,4 +22,3 @@
     - name: Upload nginx config
       template: src=files/nginx.conf dest="{{ home_dir }}/var/nginx/conf/nginx.conf"
                 owner={{ deploy_user }} group={{ deploy_user }}
-
