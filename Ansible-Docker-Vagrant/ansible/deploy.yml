@@ -1,8 +1,9 @@
+# vi: set sw=2 ts=2:
+
 - name: Transfer image from local to remote host
   hosts: all
-  #sudo: yes
   vars:
-    image: marteinn/ansible-example-django:v1.0.1
+    home_dir: /home/vagrant
     image_dir: /Users/martinsandstrom/Projekt/github/Docker-Setup-Experimentation/Ansible-Docker-Vagrant/django
     image_repository: marteinn/ansible-example-django
   tasks:
@@ -25,6 +26,12 @@
     - name: Load docker image
       shell: "docker load < /tmp/docker_image.tar"
 
+    - name: Remove old running container
+      docker:
+        name: web
+        image: "{{ image_repository }}:latest"
+        state: absent
+
     - name: Remove previous docker image
       shell: "docker rmi {{ image_repository }}:latest"
       ignore_errors: yes
@@ -43,5 +50,26 @@
     - name: Remove remote export
       shell: "rm /tmp/docker_image.tar"
 
-# - name: Deploy postgres container
-# - name: Deploy muteparrot application
+    - name: Start application container
+      docker:
+        name: web
+        image: "{{ image_repository }}:latest"
+        state: started
+        restart_policy: always
+        links:
+          - db
+        ports:
+          - "8080"
+
+    - name: Start nginx container
+      docker:
+        name: nginx
+        image: nginx
+        state: started
+        links:
+          - web:web
+        ports:
+        volumes:
+          - "{{ home_dir }}/var/nginx/conf:/etc/nginx:ro"
+        ports:
+          - "80:80"

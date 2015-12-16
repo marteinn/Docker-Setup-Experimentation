@@ -1,6 +1,6 @@
 FROM python:2.7
 MAINTAINER Marteinn
-LABEL version="v1.0.0"
+LABEL version="v1.0.4"
 
 ENV PYTHONUNBUFFERED 1
 
