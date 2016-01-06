@@ -1,0 +1,4 @@
+- name: docker | install requirements for aufs
+  apt: pkg={{ item }} state=present update_cache=yes
+  with_items:
+   - linux-image-extra-{{ ansible_kernel }}

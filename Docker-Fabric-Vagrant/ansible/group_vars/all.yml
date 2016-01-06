@@ -1,0 +1,8 @@
+# vi: set sw=2 ts=2:
+---
+ffm_common_packages:
+  - socat
+  - curl
+  - wget
+  - vim
+  - git

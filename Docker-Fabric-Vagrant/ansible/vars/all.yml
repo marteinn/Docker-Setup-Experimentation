@@ -1,0 +1,4 @@
+deploy_user: vagrant
+home_dir: /home/vagrant
+image_dir: /Users/martinsandstrom/Projekt/github/Docker-Setup-Experimentation/Ansible-Docker-Vagrant/django
+image_repository: marteinn/ansible-example-django
