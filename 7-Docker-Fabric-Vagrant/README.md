@@ -32,6 +32,9 @@ fab vagrant uname -c fabricrc.txt
 
 ### Fabric
 - fab docker.version
+- fab setup
+- fab deploy
+- fab reload_nginx
 
 
 ## References
