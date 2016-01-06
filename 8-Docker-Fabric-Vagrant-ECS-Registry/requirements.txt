@@ -1,0 +1,6 @@
+docker-fabric==0.3.9
+
+# Dev
+neovim
+pipdeptree
+awscli
