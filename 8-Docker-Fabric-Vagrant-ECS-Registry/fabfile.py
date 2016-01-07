@@ -37,24 +37,23 @@ def test():
 @task
 def setup():
     # Create postgresql data path
-    # run("mkdir -p /home/%s/var/lib/postgresql/data" % ssh_user)
+    run("mkdir -p /home/%s/var/lib/postgresql/data" % ssh_user)
 
-    # TODO: Create postgres db
-
+    # Create postgres db
     container_fabric().startup('db')
 
-    """
     # Create nginx path
     run("mkdir -p /home/%s/var/nginx/conf" % ssh_user)
 
     # Upload nginx config
     config_path = os.path.join(os.getcwd(), "files", "nginx.conf")
     put(config_path, "/home/%s/var/nginx/conf/nginx.conf" % ssh_user)
-    """
-
-    pass
 
 
 @task
 def deploy():
-    pass
+    # Start web
+    container_fabric().startup('web')
+
+    # Start nginx
+    container_fabric().startup('nginx')

@@ -7,20 +7,10 @@ db:
         - /home/vagrant/var/lib/postgresql/data
         - rw
 
-web:
-    image: !env WEB_REPOSITORY
+app:
+    image: 242868218257.dkr.ecr.us-east-1.amazonaws.com/marteinn-test
     exposes:
         8080: 8080
     links:
         - db
 
-nginx:
-    image: nginx
-    exposes:
-        80: 80
-    binds:
-        /etc/nginx:
-        - /home/vagrant/var/nginx/conf
-        - ro
-    links:
-        web
