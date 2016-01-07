@@ -20,6 +20,8 @@ This experiment means to explore the newly released AWS ECS Docker Registry agai
 
 
 ## Quickstart
+
+#### Provision server
 ```
 cd ansible
 virtualenv venv
@@ -29,7 +31,29 @@ cd ..
 vagrant up
 ```
 
-## TODO: Releaseflow
+#### Setup docker containers
+
+- First add your own remote repository (based on the `django` app included)
+
+```
+cp fabricrc.example.txt fabricrc.txt
+vim fabricrc.txt
+```
+
+- Create db and upload settings
+
+```
+fab vagrant setup -c fabricrc.txt
+```
+
+- Deploy app
+
+```
+fab vagrant deploy -c fabricrc.txt
+```
+
+
+## TODO: Release flow
 - build image
 - push to registry
 - Make registry pull latest image
