@@ -1,0 +1,8 @@
+db:
+    image: postgres
+    exposes:
+        5432: 5432
+    binds:
+        /var/lib/postgresql/data:
+        - /home/vagrant/var/lib/postgresql/data
+        - rw

@@ -1,4 +1,4 @@
-docker-fabric==0.3.9
+docker-fabric[yaml]==0.3.9
 
 # Dev
 neovim
