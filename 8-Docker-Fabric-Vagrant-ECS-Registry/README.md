@@ -9,11 +9,12 @@ This experiment means to explore the newly released AWS ECS Docker Registry agai
 - Socat on remote
 - awscli on local
 - Vagrant
+- Ansible
 
 
 ## AWS
 - Register repository
-- Add AmazonEC2ContainerRegistryFullAccess to your IAM user
+- Add AmazonEC2ContainerRegistryFullAccess to your IAM user (not in prod please)
 - Run `aws ecr get-login --region us-east-1 --profile <your_ami_user>` to obtain repro access (to obtain registry auth)
 - Authenticate locally `docker login -u AWS -p ....`
 - Authenticate remote `docker login -u AWS -p ....`
