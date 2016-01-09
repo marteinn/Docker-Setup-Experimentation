@@ -12,11 +12,13 @@ from dockerfabric import yaml
 ssh_key_path = os.path.join(os.getcwd(), ".vagrant", "machines", "default",
                             "virtualbox", "private_key")
 ssh_user = 'vagrant'
+web_dir = "django"
 
 docker_map_path = os.path.join(os.getcwd(), "docker_map.yaml")
 
 # Assign env
 env.docker_maps = yaml.load_map_file(docker_map_path, 'docker_map')
+
 
 
 @task
@@ -48,6 +50,25 @@ def setup():
     # Upload nginx config
     config_path = os.path.join(os.getcwd(), "files", "nginx.conf")
     put(config_path, "/home/%s/var/nginx/conf/nginx.conf" % ssh_user)
+
+
+@task
+def build():
+    # Retrive app version from app image dockerfile
+    deploy_version = local('cat %s/Dockerfile | \
+                           grep -e "^LABEL.version" | \
+                           cut -d \\" -f 2' %
+                           web_dir, capture=True)
+
+    # Build docker app image
+    local("docker build -t %s:%s %s" % (env.WEB_REPOSITORY, deploy_version,
+                                        web_dir))
+
+
+@task
+def push():
+    # Push image to repository
+    local("docker push %s" % env.WEB_REPOSITORY)
 
 
 @task
