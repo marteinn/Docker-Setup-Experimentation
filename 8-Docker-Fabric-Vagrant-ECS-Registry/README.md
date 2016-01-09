@@ -60,7 +60,16 @@ fab vagrant deploy -c fabricrc.txt
 - Start new container based on new image
 
 
+## Commands
+
+#### AWS ECR
+- Remove remote tag
+`aws ecr batch-delete-image --repository-name <REPOSITORY_NAME> --image-ids imageTag=<TAG_NAME> --region us-east-1`
+
+
 ## References
 - http://docs.aws.amazon.com/AmazonECS/latest/developerguide/docker-basics.html
+- http://docs.aws.amazon.com/AmazonECR/latest/userguide/ECR_AWSCLI.html
 - https://blog.gopheracademy.com/advent-2014/easy-deployment/
 - http://www.luiselizondo.net/a-production-ready-docker-workflow/
+- https://medium.com/@mccode/the-misunderstood-docker-tag-latest-af3babfd6375#.ozqrbwb0z
