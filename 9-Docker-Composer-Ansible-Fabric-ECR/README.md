@@ -68,7 +68,8 @@ fab vagrant deploy -c fabricrc.txt
 
 
 ## TODO:
-- Add .env file to web-container
+- (Done!) Add .env file to web-container
 - Add code to handle aws ECR re-auth when token expires
 - Implement proper logging
 - Investigate possibilities to reuse containers between composer setups
+- Look into running django-app differently when locally and prod (Optional)
