@@ -1,0 +1,6 @@
+fabric
+
+# Dev
+neovim
+pipdeptree
+awscli

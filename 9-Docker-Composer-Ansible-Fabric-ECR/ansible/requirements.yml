@@ -1,0 +1,5 @@
+# Initall server setup role
+- src: fretscha.first-five-minutes
+
+# Docker setup
+- src: angstwad.docker_ubuntu
