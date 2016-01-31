@@ -2,8 +2,13 @@
 
 This experiment means to explore the newly released AWS ECS Docker Registry against a docker vagrant box. The app distrubution method there will be through a registry, not as previously using load/save in docker.
 
-## Questions
-- Is it possible to work with something lika a git-hook-ish for docker, to detect updated app image and force reload?
+All image versions are stored in the registry and we use a release tag (for instance latest) to deploy new image versions.
+
+Having issues with image not found when running deploy for the second time? Restart the docker deamon (`service docker restart`)
+
+This experiment currently has issues with http-timeouts when trying to restart `web`.
+
+
 
 ## Requirements
 - Socat on remote
@@ -32,7 +37,7 @@ cd ..
 vagrant up
 ```
 
-#### Setup docker containers
+#### Deploy tasks
 
 - First add your own remote repository (based on the `django` app included)
 
@@ -47,25 +52,43 @@ vim fabricrc.txt
 fab vagrant setup -c fabricrc.txt
 ```
 
-- Deploy app
+- Build application (django) image
+
+```
+fab vagrant build -c fabricrc.txt
+```
+
+- Push image to repro
+
+```
+fab vagrant push -c fabricrc.txt
+```
+
+- Deploy containers on remote
 
 ```
 fab vagrant deploy -c fabricrc.txt
 ```
 
+- A regular end to end deploy command would look like this.
+```
+fab vagrant build push deploy -c fabricrc.txt
+```
 
-## TODO: Release flow
-- build image
-- push to registry
-- Make registry pull latest image
-- Start new container based on new image
+
 
 
 ## Commands
 
 #### AWS ECR
-- Remove remote tag
+- List repository images
+`aws ecr list-images --repository-name <REPOSITORY_NAME> --region us-east-1`
+
+- Remove remote image by tag
 `aws ecr batch-delete-image --repository-name <REPOSITORY_NAME> --image-ids imageTag=<TAG_NAME> --region us-east-1`
+
+- Remove remote image by tag
+`aws ecr batch-delete-image --repository-name <REPOSITORY_NAME> --image-ids imageDigest=sha256:<IMAGE_DIGEST> --region us-east-1`
 
 
 ## References

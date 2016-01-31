@@ -1,10 +1,29 @@
+"""
+A docker release flow that delivers the app image using amazons docker registry
+
+This fabric flow uses two taks, setup and deploy.
+setup
+    Pull postgres and nginx images
+    Setup and run postgres container
+    Upload nginx config to /home/vagrant/...
+build
+    Build new app image (django) with the new release name
+push
+    Remove old image with release tag from registry
+    Upload new release image
+deploy
+    Pull latest image from registry
+    Reconstruct nginx container
+    Restart web container
+"""
+
 import os
 
-from fabric.api import env, local, run, warn_only
+from fabric.api import env, local, run
 from fabric.decorators import task
 from fabric.operations import put
 
-from dockerfabric.apiclient import docker_fabric, container_fabric
+from dockerfabric.apiclient import container_fabric
 from dockerfabric import yaml
 
 
@@ -14,11 +33,10 @@ ssh_key_path = os.path.join(os.getcwd(), ".vagrant", "machines", "default",
 ssh_user = 'vagrant'
 web_dir = "django"
 
+# Create docker map
 docker_map_path = os.path.join(os.getcwd(), "docker_map.yaml")
-
-# Assign env
-env.docker_maps = yaml.load_map_file(docker_map_path, 'docker_map')
-
+docker_maps = yaml.load_map_file(docker_map_path, 'docker_map')
+env.docker_maps = docker_maps
 
 
 @task
@@ -28,7 +46,7 @@ def vagrant():
     env.key_filename = ssh_key_path
 
     env.docker_tunnel_local_port = 22025
-    env.timeout = 30
+    env.timeout = 60
 
 
 @task
@@ -52,29 +70,81 @@ def setup():
     put(config_path, "/home/%s/var/nginx/conf/nginx.conf" % ssh_user)
 
 
-@task
-def build():
+def _read_tag():
     # Retrive app version from app image dockerfile
     deploy_version = local('cat %s/Dockerfile | \
                            grep -e "^LABEL.version" | \
                            cut -d \\" -f 2' %
                            web_dir, capture=True)
 
-    # Build docker app image
+    return deploy_version
+
+
+@task
+def build():
+    # Retrive app version from app image dockerfile
+    deploy_version = _read_tag()
+
+    # Removed previous image with release tag
+    try:
+        local("docker rmi %s:%s" % (env.WEB_REPOSITORY, env.RELEASE_TAG))
+    except:
+        print("Previous image not found")
+
+    # Build release image
+    local("docker build -t %s %s" % (env.IMAGE_NAME, web_dir))
+
+    # Tag release (master/develop)
     local("docker build -t %s:%s %s" % (env.WEB_REPOSITORY, deploy_version,
                                         web_dir))
+    local("docker tag %s:%s %s:%s" % (env.IMAGE_NAME, env.RELEASE_TAG,
+                                      env.WEB_REPOSITORY, env.RELEASE_TAG))
 
 
 @task
 def push():
+    """
+    Push image to registry and cleanup previous release
+    """
+    deploy_version = _read_tag()
+
+    # Delete previous master from ECR
+    try:
+        delete_args = {
+            "region": env.get("AWS_REGION", "us-east-1"),
+            "profile": env.get("AWS_PROFILE")
+        }
+
+        delete_command = "aws ecr batch-delete-image --repository-name %s \
+            --image-ids imageTag=%s" % (env.IMAGE_NAME, env.RELEASE_TAG)
+
+        for arg in delete_args:
+            if not delete_args[arg]:
+                continue
+            delete_command += " --%s=%s" % (arg, delete_args[arg])
+
+        local(delete_command)
+    except:
+        print("Remote image tag not found")
+
     # Push image to repository
-    local("docker push %s" % env.WEB_REPOSITORY)
+    local("docker push %s:%s" % (env.WEB_REPOSITORY, deploy_version))
+    local("docker push %s:%s" % (env.WEB_REPOSITORY, env.RELEASE_TAG))
 
 
 @task
 def deploy():
-    # Start web
-    container_fabric().startup('web')
+    """
+    Deploy the latest image on remote machine
+    """
+    # Stop web
+    container_fabric().stop('web')
+
+    # Pull latest repro changes
+    run("docker pull %s:%s" % (env.WEB_REPOSITORY, env.RELEASE_TAG))
+
+    # Update web
+    container_fabric().update('web')
 
     # Start nginx
     container_fabric().startup('nginx')
