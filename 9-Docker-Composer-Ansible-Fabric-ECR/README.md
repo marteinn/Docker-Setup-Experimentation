@@ -71,3 +71,4 @@ fab vagrant deploy -c fabricrc.txt
 - Add .env file to web-container
 - Add code to handle aws ECR re-auth when token expires
 - Implement proper logging
+- Investigate possibilities to reuse containers between composer setups

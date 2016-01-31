@@ -132,7 +132,7 @@ def deploy():
 
     # TODO: Remove unused images
     # https://forums.docker.com/t/command-to-remove-all-unused-images/20/5
-    try:
-        run('docker rmi -f $(docker images | grep "<none>" | awk "{print \$3}")')
-    except:
-        pass
+    #try:
+        #run('docker rmi -f $(docker images | grep "<none>" | awk "{print \$3}")')
+    #except:
+        #pass
