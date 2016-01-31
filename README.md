@@ -1,12 +1,12 @@
 # Docker research
 
-## Tools:
-- docker
-- docker-machine
-- docker-compose
-- swarm
+This repository contains a collection of various docker deploy flow experiments.
+
+They cover everything from basic docker-compose setup to CI integrations and ansible orchestration.
+
 
 ## Commands:
+
 ### Docker-machine
 - Create default virtualbox machine
     - `docker-machine create --driver virtualbox default`
@@ -72,7 +72,7 @@
 - (Done) Try to package a application image
 - (Done) Try setup with nginx, django, uwsgi and postgres
 - (Done) Port a django project to docker
-- Create a CI runner with Circle-CI and docker
+- (Done) Create a CI runner with Circle-CI and docker
 - Test to run a multisite setup with reverse proxy
 - Port a wp project to docker
 - Research docker repository
