@@ -20,3 +20,5 @@ web:
         - "8080"
     links:
         - db
+    volumes:
+        - /home/vagrant/var/web/.env:/src/.env:rw

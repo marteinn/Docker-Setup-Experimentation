@@ -52,6 +52,10 @@ def setup():
     # Create nginx path
     run("mkdir -p /home/%s/var/nginx/conf" % ssh_user)
 
+    # Create stub web app config
+    run("mkdir -p /home/%s/var/web/" % ssh_user)
+    run("touch /home/%s/var/web/.env" % ssh_user)
+
     # Upload nginx config
     config_path = os.path.join(os.getcwd(), "files", "nginx.conf")
     put(config_path, "/home/%s/var/nginx/conf/nginx.conf" % ssh_user)
