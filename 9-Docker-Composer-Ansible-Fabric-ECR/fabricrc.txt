@@ -1,4 +1,0 @@
-IMAGE_NAME=django-test
-WEB_REPOSITORY=242868218257.dkr.ecr.us-east-1.amazonaws.com/django-test
-RELEASE_TAG=latest
-AWS_PROFILE=marteinn
