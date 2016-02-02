@@ -132,7 +132,9 @@ def deploy():
     run("docker pull %s:%s" % (env.WEB_REPOSITORY, env.RELEASE_TAG))
 
     # Restart web container
-    run("docker-compose %s up --no-deps -d web" % compose_config)
+    run("docker-compose %s up --no-deps -d web nginx" % compose_config)
+    # run("docker-compose %s restart" % compose_config)
+    # run("docker-compose %s restart nginx" % compose_config)
 
     # TODO: Remove unused images
     # https://forums.docker.com/t/command-to-remove-all-unused-images/20/5
