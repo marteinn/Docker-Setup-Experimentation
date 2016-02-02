@@ -69,7 +69,11 @@ fab vagrant deploy -c fabricrc.txt
 
 ## TODO:
 - (Done!) Add .env file to web-container
+- Add `pip install aws..` script in ansible
 - Add code to handle aws ECR re-auth when token expires
+    - (Done!) Local
+    - Remote
 - Implement proper logging
+- Look into db automation and auth
 - Investigate possibilities to reuse containers between composer setups
 - Look into running django-app differently when locally and prod (Optional)
