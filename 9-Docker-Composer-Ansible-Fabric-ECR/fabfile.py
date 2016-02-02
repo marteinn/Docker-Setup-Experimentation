@@ -121,6 +121,21 @@ def push():
     except:
         print("Remote image tag not found")
 
+    # Authenticate with ecr
+    auth_args = {
+        "region": env.get("AWS_REGION", "us-east-1"),
+        "profile": env.get("AWS_PROFILE")
+    }
+
+    auth_command = "aws ecr get-login"
+
+    for arg in auth_args:
+        if not auth_args[arg]:
+            continue
+        auth_command += " --%s=%s" % (arg, auth_args[arg])
+
+    local("$(%s)" % auth_command)
+
     # Push image to repository
     local("docker push %s:%s" % (env.WEB_REPOSITORY, deploy_version))
     local("docker push %s:%s" % (env.WEB_REPOSITORY, env.RELEASE_TAG))
@@ -128,6 +143,7 @@ def push():
 
 @task
 def deploy():
+
     # Pull latest repro changes
     run("docker pull %s:%s" % (env.WEB_REPOSITORY, env.RELEASE_TAG))
 
