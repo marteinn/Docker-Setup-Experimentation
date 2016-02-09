@@ -1,7 +1,10 @@
 - name: Installing and configuring a Docker server
+  vars_files:
+    - [ "vars/secrets.yml", "vars/all.yml" ]
   hosts: all
   sudo: yes
   roles:
     - docker-patch
     - fretscha.first-five-minutes
     - angstwad.docker_ubuntu
+    - aws-cli

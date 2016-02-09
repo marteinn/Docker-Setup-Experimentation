@@ -1,0 +1,12 @@
+- name: Install aws with pip
+  sudo: yes
+  pip: name=aws
+
+- name: Assures aws dir exists
+  file: path=~/.aws state=directory
+
+- name: Create aws config file
+  template: src=config.tpl dest=~/.aws/config
+
+- name: Create aws credential file
+  template: src=credentials.tpl dest=~/.aws/credentials
