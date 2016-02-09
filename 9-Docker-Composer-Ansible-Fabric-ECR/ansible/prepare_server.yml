@@ -1,6 +1,6 @@
 - name: Installing and configuring a Docker server
   vars_files:
-    - [ "vars/secrets.yml", "vars/all.yml" ]
+    - [ "group_vars/secrets.yml", "group_vars/all.yml" ]
   hosts: all
   sudo: yes
   roles:
