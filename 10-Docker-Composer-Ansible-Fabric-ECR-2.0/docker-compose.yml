@@ -15,9 +15,9 @@ nginx:
         - /etc/nginx:/home/vagrant/var/nginx/conf:ro
 
 web:
-    build: ./django
+    build: ./
     volumes:
-        - ./django/src:/src
+        - ./src:/src
     ports:
         - "8080"
     links:
