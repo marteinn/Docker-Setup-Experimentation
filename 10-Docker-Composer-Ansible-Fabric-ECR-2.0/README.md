@@ -27,6 +27,10 @@ This experiment is based on experiment no 9 (ansible, compose, docker), with the
 
 ## Quickstart
 
+#### Locally
+
+`mkdir ./docker/var/lib/postgresql/data`
+
 #### Provision server
 ```
 cd ansible

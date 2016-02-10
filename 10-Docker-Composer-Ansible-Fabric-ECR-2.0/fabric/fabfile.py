@@ -6,10 +6,11 @@ from fabric.operations import put
 
 
 # Hard coded config vars
-ssh_key_path = os.path.join(os.getcwd(), ".vagrant", "machines", "default",
+ssh_key_path = os.path.join(os.getcwd(), "..", "ansible", ".vagrant",
+                            "machines", "default",
                             "virtualbox", "private_key")
 ssh_user = 'vagrant'
-web_dir = "django"
+web_dir = "../src"
 
 
 compose_files = [

@@ -1,8 +1,8 @@
 db:
     image: postgres
     restart: always
-    volumes:
-        - /var/lib/postgresql/data:/home/vagrant/var/lib/postgresql/data:rw
+    #volumes:
+        #- ./docker/var/lib/postgresql/data:/var/lib/postgresql/data:rw
 
 nginx:
     image: nginx
@@ -12,10 +12,10 @@ nginx:
     ports:
         - "80:80"
     volumes:
-        - /etc/nginx:/home/vagrant/var/nginx/conf:ro
+        - ./fabric/files/nginx.conf:/etc/nginx/nginx.conf:ro
 
 web:
-    build: ./
+    build: ./src
     volumes:
         - ./src:/src
     ports:
