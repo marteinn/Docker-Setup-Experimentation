@@ -1,0 +1,16 @@
+# vi: set sw=2 ts=2:
+---
+ffm_common_packages:
+  - socat
+  - curl
+  - wget
+  - vim
+  - git
+deploy_user: vagrant
+home_dir: /home/vagrant
+image_dir: /Users/martinsandstrom/Projekt/github/Docker-Setup-Experimentation/Ansible-Docker-Vagrant/django
+image_repository: marteinn/ansible-example-django
+
+aws_region: us-west-1
+aws_access_key_id: xxx
+aws_secret_access_key: xxx

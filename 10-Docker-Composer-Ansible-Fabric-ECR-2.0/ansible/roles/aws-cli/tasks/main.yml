@@ -1,0 +1,15 @@
+- name: Install aws with pip
+  sudo: yes
+  pip: name=awscli
+
+- name: Assures aws dir exists
+  file: path={{ home_dir }}/.aws state=directory
+        owner={{ deploy_user }}
+
+- name: Create aws config file
+  template: src=config.tpl dest={{ home_dir }}/.aws/config
+            owner={{ deploy_user }}
+
+- name: Create aws credential file
+  template: src=credentials.tpl dest={{ home_dir }}/.aws/credentials
+            owner={{ deploy_user }}

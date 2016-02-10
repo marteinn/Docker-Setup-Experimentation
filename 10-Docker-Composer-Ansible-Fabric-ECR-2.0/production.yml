@@ -1,0 +1,24 @@
+db:
+    image: postgres
+    restart: always
+    volumes:
+        - /home/vagrant/var/lib/postgresql/data:/var/lib/postgresql/data:rw
+
+nginx:
+    image: nginx
+    links:
+        - web:web
+    restart: always
+    ports:
+        - "80:80"
+    volumes:
+        - /home/vagrant/var/nginx/conf:/etc/nginx:ro
+
+web:
+    image: 242868218257.dkr.ecr.us-east-1.amazonaws.com/django-test:latest
+    ports:
+        - "8080"
+    links:
+        - db
+    volumes:
+        - /home/vagrant/var/web/.env:/src/.env:rw

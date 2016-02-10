@@ -1,0 +1,24 @@
+db:
+    image: postgres
+    restart: always
+    volumes:
+        - /var/lib/postgresql/data:/home/vagrant/var/lib/postgresql/data:rw
+
+nginx:
+    image: nginx
+    links:
+        - web:web
+    restart: always
+    ports:
+        - "80:80"
+    volumes:
+        - /etc/nginx:/home/vagrant/var/nginx/conf:ro
+
+web:
+    build: ./django
+    volumes:
+        - ./django/src:/src
+    ports:
+        - "8080"
+    links:
+        - db

@@ -1,0 +1,7 @@
+.vagrant
+venv
+fabricrc.txt
+.env
+
+# Ansible
+secrets.yml
