@@ -43,6 +43,9 @@ def sync_compose():
 
 @task
 def setup():
+    # Login to remote repro
+    _aws_ecr_login(run, region=env.get("AWS_REGION", "us-east-1"))
+
     # Upload docker-compose
     sync_compose()
 
@@ -72,6 +75,23 @@ def _read_tag():
                            web_dir, capture=True)
 
     return deploy_version
+
+
+def _aws_ecr_login(method, region="us-east-1", profile=""):
+    # Authenticate with ecr
+    auth_args = {
+        "region": region,
+        "profile": profile
+    }
+
+    auth_command = "aws ecr get-login"
+
+    for arg in auth_args:
+        if not auth_args[arg]:
+            continue
+        auth_command += " --%s=%s" % (arg, auth_args[arg])
+
+    method("$(%s)" % auth_command)
 
 
 @task
@@ -122,19 +142,8 @@ def push():
         print("Remote image tag not found")
 
     # Authenticate with ecr
-    auth_args = {
-        "region": env.get("AWS_REGION", "us-east-1"),
-        "profile": env.get("AWS_PROFILE")
-    }
-
-    auth_command = "aws ecr get-login"
-
-    for arg in auth_args:
-        if not auth_args[arg]:
-            continue
-        auth_command += " --%s=%s" % (arg, auth_args[arg])
-
-    local("$(%s)" % auth_command)
+    _aws_ecr_login(local, region=env.get("AWS_REGION", "us-east-1"),
+                   profile=env.get("AWS_PROFILE"))
 
     # Push image to repository
     local("docker push %s:%s" % (env.WEB_REPOSITORY, deploy_version))
@@ -143,6 +152,7 @@ def push():
 
 @task
 def deploy():
+    _aws_ecr_login(run, region=env.get("AWS_REGION", "us-east-1"))
 
     # Pull latest repro changes
     run("docker pull %s:%s" % (env.WEB_REPOSITORY, env.RELEASE_TAG))
