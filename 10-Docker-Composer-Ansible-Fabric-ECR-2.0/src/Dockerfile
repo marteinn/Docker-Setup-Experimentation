@@ -2,6 +2,8 @@ FROM python:2.7
 MAINTAINER Marteinn
 LABEL version="v1.0.0"
 
+RUN apt-get update && apt-get install netcat -y
+
 ENV PYTHONUNBUFFERED 1
 
 WORKDIR /

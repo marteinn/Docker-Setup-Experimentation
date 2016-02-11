@@ -6,9 +6,9 @@ db:
 
 nginx:
     image: nginx
+    restart: always
     links:
         - web:web
-    restart: always
     ports:
         - "80:80"
     volumes:
@@ -19,6 +19,8 @@ web:
     volumes:
         - ./src:/src
     ports:
-        - "8080"
+        - "8080:8080"
     links:
         - db
+    environment:
+        RUNSERVER: 1
