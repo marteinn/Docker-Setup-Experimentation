@@ -1,18 +1,10 @@
+# Local/Dev
 db:
     image: postgres
     restart: always
     #volumes:
         #- ./docker/var/lib/postgresql/data:/var/lib/postgresql/data:rw
 
-nginx:
-    image: nginx
-    restart: always
-    links:
-        - web:web
-    ports:
-        - "80:80"
-    volumes:
-        - ./fabric/files/nginx.conf:/etc/nginx/nginx.conf:ro
 web:
     build: ./src
     volumes:

@@ -10,6 +10,11 @@ This experiment is based on experiment no 9 (ansible, compose, docker), with the
 - The django app should be able to run, as docker, but using runserver, toggled with a env-var.
 - Vagrant should require ansible to be available before running `up`
 
+## TODO
+- Make uwsgi log to `docker logs`
+- Look into making app image smaller in size
+
+
 
 ## Requirementstu
 - awscli on local and remote
@@ -29,9 +34,11 @@ This experiment is based on experiment no 9 (ansible, compose, docker), with the
 
 #### Locally
 
-`mkdir ./docker/var/lib/postgresql/data`
+Run `docker-compose up` in project-dir.
 
-#### Provision server
+
+#### Provision vagrant-server
+
 ```
 cd ansible
 virtualenv venv
@@ -43,13 +50,14 @@ vagrant up
 
 
 ## Fabric
+
 - Perform initial setup (create folders, upload compose files and start containers)
 
 ```
 fab vagrant setup -c fabricrc.txt
 ```
 
-- Sync compose config files
+- Sync docker-compose config files
 
 ```
 fab vagrant sync_compose -c fabricrc.txt

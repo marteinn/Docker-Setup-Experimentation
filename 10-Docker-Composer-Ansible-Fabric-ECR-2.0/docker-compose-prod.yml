@@ -1,3 +1,4 @@
+# Prod
 db:
     image: postgres
     restart: always
@@ -21,4 +22,5 @@ web:
     links:
         - db
     volumes:
-        - /home/vagrant/var/web/.env:/src/.env:rw
+        - /home/vagrant/var/web/.env:/app/.env:ro
+        - /home/vagrant/var/web/uwsgi.log:/app/uwsgi.log:rw

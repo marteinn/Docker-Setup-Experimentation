@@ -1,7 +1,25 @@
+# Python specific, Byte-compiled / optimized / DLL files
+*.pyc
+__pycache__/
+*.py[cod]
+
+# OSX
+.DS_Store
+
+# Vagrant
 .vagrant
+
+# Virtualenv
 venv
+
+# Fabric
 fabricrc.txt
+
+# Environment
 .env
 
 # Ansible
 secrets.yml
+
+# Logfiles
+*.log
