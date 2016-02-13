@@ -13,7 +13,6 @@ nginx:
         - "80:80"
     volumes:
         - ./fabric/files/nginx.conf:/etc/nginx/nginx.conf:ro
-
 web:
     build: ./src
     volumes:

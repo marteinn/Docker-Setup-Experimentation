@@ -6,14 +6,12 @@ RUN apt-get update && apt-get install netcat -y
 
 ENV PYTHONUNBUFFERED 1
 
-WORKDIR /
-ADD requirements.txt /
-ADD uwsgi.ini /
+ADD / /src
+WORKDIR /src
 
 RUN pip install -r requirements.txt
-ADD . /
 
 EXPOSE 8080
 
-COPY ./docker-entrypoint.sh /
-ENTRYPOINT ["/docker-entrypoint.sh"]
+COPY ./docker-entrypoint.sh /src/
+ENTRYPOINT ["/src/docker-entrypoint.sh"]
