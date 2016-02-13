@@ -13,7 +13,7 @@ python manage.py migrate
 if [ -z "$RUNSERVER" ]
 then
     echo Starting using uwsg
-    uwsgi --ini /uwsgi.ini
+    uwsgi --ini uwsgi.ini
 else
     echo Starting using manage.py runserver
     python manage.py runserver 0.0.0.0:8080
