@@ -6,12 +6,13 @@ RUN apt-get update && apt-get install netcat -y
 
 ENV PYTHONUNBUFFERED 1
 
-ADD / /src
-WORKDIR /src
+RUN mkdir /app
+WORKDIR /app
+ADD . /app/
 
 RUN pip install -r requirements.txt
 
 EXPOSE 8080
 
-COPY ./docker-entrypoint.sh /src/
-ENTRYPOINT ["/src/docker-entrypoint.sh"]
+COPY ./docker-entrypoint.sh /app/
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
