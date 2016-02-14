@@ -10,14 +10,20 @@ ssh_user = 'vagrant'
 web_dir = "../src"
 
 
+compose_env_files = [
+    'web.env',
+    'db.env',
+]
+
 compose_files = [
-    # 'docker-compose.yml',
-    'production.yml'
+    'docker-compose-prod.yml'
 ]
 
 compose_config = ""
 for arg in compose_files:
     compose_config += " -f %s" % arg
+
+compose_config = compose_config.strip()
 
 
 @task
@@ -36,19 +42,32 @@ def test():
 
 
 @task
+def sync_compose_envs():
+    for env_file in compose_env_files:
+        env_path = os.path.join(os.getcwd(), '..', 'docker-compose-config',
+                                env_file)
+        put(env_path, "/home/%s/docker-compose-config/%s" % (ssh_user,
+                                                             env_file))
+
+
+@task
 def sync_compose_config():
     for config_file in compose_files:
-        config_path = os.path.join(os.getcwd(), config_file)
+        config_path = os.path.join(os.getcwd(), '..', config_file)
         put(config_path, "/home/%s/%s" % (ssh_user, config_file))
 
 
 @task
-def setup():
+def setup(up=False):
     # Login to remote repro
     _aws_ecr_login(run, region=env.get("AWS_REGION", "us-east-1"))
 
-    # Upload docker-compose
+    # Create compose config files
+    run("mkdir -p /home/%s/docker-compose-config" % ssh_user)
+
+    # Upload docker-compose files
     sync_compose_config()
+    sync_compose_envs()
 
     # Create postgresql data path
     run("mkdir -p /home/%s/var/lib/postgresql/data" % ssh_user)
@@ -59,6 +78,7 @@ def setup():
     # Create stub web app config
     run("mkdir -p /home/%s/var/web/" % ssh_user)
     run("touch /home/%s/var/web/.env" % ssh_user)
+    run("touch /home/%s/var/web/uwsgi.log" % ssh_user)
 
     # Upload nginx config
     config_path = os.path.join(os.getcwd(), "files", "nginx.conf")
@@ -159,7 +179,7 @@ def deploy():
     run("docker pull %s:%s" % (env.WEB_REPOSITORY, env.RELEASE_TAG))
 
     # Restart web container
-    run("docker-compose -f %s up -p %s" % (compose_config, env.PROJECT_NAME))
+    run("docker-compose %s -p %s up -d" % (compose_config, env.PROJECT_NAME))
     # run("docker-compose %s restart" % compose_config)
     # run("docker-compose %s restart nginx" % compose_config)
 
