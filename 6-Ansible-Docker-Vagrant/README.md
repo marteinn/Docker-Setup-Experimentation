@@ -1,4 +1,4 @@
-# Ansible+Docker+Vagrant
+# 6. Ansible+Docker+Vagrant
 
 This is a experiment to see how to provision and transfer images to a vagrant box using ansible.
 

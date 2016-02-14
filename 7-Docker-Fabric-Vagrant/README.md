@@ -1,4 +1,4 @@
-# Docker-Fabric-Vagrant
+# 7. Docker-Fabric-Vagrant
 The purpose of this experiment is to use fabric as a container orchestation tool (either with regular fabric or with docker-fabric). Ansible is used for the initial server preparation.
 
 

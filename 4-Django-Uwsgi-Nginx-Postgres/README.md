@@ -1,3 +1,3 @@
-# Django-Uwsgi-Nginx-Postgres
+# 4. Django-Uwsgi-Nginx-Postgres
 
 A complete nginx+django+postgres orechestation in docker-compose

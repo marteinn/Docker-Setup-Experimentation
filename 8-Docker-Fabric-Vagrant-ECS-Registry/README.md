@@ -1,4 +1,4 @@
-# Docker-Fabric-Vagrant-ECS-Registry
+# 8. Docker-Fabric-Vagrant-ECS-Registry
 
 This experiment means to explore the newly released AWS ECS Docker Registry against a docker vagrant box. The app distrubution method there will be through a registry, not as previously using load/save in docker.
 
