@@ -1,3 +1,4 @@
+PROJECT_NAME=example-project
 IMAGE_NAME=django-test
 WEB_REPOSITORY=XXXXXXX.dkr.ecr.us-east-1.amazonaws.com/django-test
 RELEASE_TAG=latest
