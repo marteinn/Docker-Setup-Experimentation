@@ -22,6 +22,6 @@ Vagrant.configure(2) do |config|
       docker_group_members: ['vagrant'],
     }
 
-    ansible.playbook = "ansible/prepare_server.yml"
+    ansible.playbook = "prepare_server.yml"
   end
 end
