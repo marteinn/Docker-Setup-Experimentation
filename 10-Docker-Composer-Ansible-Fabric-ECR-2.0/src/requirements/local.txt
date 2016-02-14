@@ -1,0 +1,6 @@
+# Extend base.txt
+-r base.txt
+
+# Add local extra requirements here
+neovim
+pipdeptree
