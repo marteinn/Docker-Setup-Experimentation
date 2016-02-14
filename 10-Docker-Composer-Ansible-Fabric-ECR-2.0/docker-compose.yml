@@ -8,7 +8,7 @@ db:
 web:
     build: ./src
     volumes:
-        - ./src:/src
+        - ./src:/app
     ports:
         - "8080:8080"
     links:
