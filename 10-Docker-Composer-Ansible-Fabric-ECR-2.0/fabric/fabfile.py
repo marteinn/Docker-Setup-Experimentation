@@ -6,9 +6,6 @@ from fabric.operations import put
 
 
 # Hard coded config vars
-ssh_key_path = os.path.join(os.getcwd(), "..", "ansible", ".vagrant",
-                            "machines", "default",
-                            "virtualbox", "private_key")
 ssh_user = 'vagrant'
 web_dir = "../src"
 
@@ -25,6 +22,9 @@ for arg in compose_files:
 
 @task
 def vagrant():
+    ssh_key_path = os.path.join(os.getcwd(), "..", "ansible", ".vagrant",
+                                "machines", "default", "virtualbox",
+                                "private_key")
     env.user = 'vagrant'
     env.hosts = ['127.0.0.1:2222']
     env.key_filename = ssh_key_path
@@ -36,7 +36,7 @@ def test():
 
 
 @task
-def sync_compose():
+def sync_compose_config():
     for config_file in compose_files:
         config_path = os.path.join(os.getcwd(), config_file)
         put(config_path, "/home/%s/%s" % (ssh_user, config_file))
@@ -48,7 +48,7 @@ def setup():
     _aws_ecr_login(run, region=env.get("AWS_REGION", "us-east-1"))
 
     # Upload docker-compose
-    sync_compose()
+    sync_compose_config()
 
     # Create postgresql data path
     run("mkdir -p /home/%s/var/lib/postgresql/data" % ssh_user)
@@ -65,7 +65,7 @@ def setup():
     put(config_path, "/home/%s/var/nginx/conf/nginx.conf" % ssh_user)
 
     # Do initial compose setup
-    run("docker-compose %s up -d" % compose_config)
+    # run("docker-compose -f %s up -d -p %s" % (compose_config, env.PROJECT_NAME))
 
 
 def _read_tag():
@@ -159,7 +159,7 @@ def deploy():
     run("docker pull %s:%s" % (env.WEB_REPOSITORY, env.RELEASE_TAG))
 
     # Restart web container
-    run("docker-compose %s up --no-deps -d web nginx" % compose_config)
+    run("docker-compose -f %s up -p %s" % (compose_config, env.PROJECT_NAME))
     # run("docker-compose %s restart" % compose_config)
     # run("docker-compose %s restart nginx" % compose_config)
 
