@@ -4,6 +4,12 @@ db:
     restart: always
     volumes:
         - /home/vagrant/var/lib/postgresql/data:/var/lib/postgresql/data:rw
+    env_file:
+        - docker-compose-config/db.env
+    #environment:
+        #POSTGRES_PASSWORD:
+        #POSTGRES_USER:
+        #POSTGRES_DB:
 
 nginx:
     image: nginx
@@ -22,5 +28,7 @@ web:
     links:
         - db
     volumes:
-        - /home/vagrant/var/web/.env:/app/.env:ro
+        #- /home/vagrant/var/web/.env:/app/.env:ro
         - /home/vagrant/var/web/uwsgi.log:/app/uwsgi.log:rw
+    env_file:
+        - docker-compose-config/web.env

@@ -17,6 +17,8 @@ fabricrc.txt
 
 # Environment
 .env
+docker-compose-config/db.env
+docker-compose-config/web.env
 
 # Ansible
 secrets.yml

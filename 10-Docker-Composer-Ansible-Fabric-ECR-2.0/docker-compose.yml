@@ -2,6 +2,8 @@
 db:
     image: postgres
     restart: always
+    env_file:
+        - docker-compose-config/db.env
     #volumes:
         #- ./docker/var/lib/postgresql/data:/var/lib/postgresql/data:rw
 
@@ -15,3 +17,5 @@ web:
         - db
     environment:
         RUNSERVER: 1
+    env_file:
+        - docker-compose-config/web.env
